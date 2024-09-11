@@ -9,7 +9,7 @@ export default function App() {
     <View style={styles.container}>
       <Text className="text-xl bg-yellow-300 w-full text-center">Hello world!</Text>
       <StatusBar style="auto" />
-      <Link href="/Profile" style={{ color: "blue", paddingTop: 20 }}>
+      <Link href="./profile" style={{ color: "blue", paddingTop: 20 }}>
         Go To Profile
       </Link>
     </View>
