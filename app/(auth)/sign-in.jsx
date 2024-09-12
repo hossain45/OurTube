@@ -13,27 +13,7 @@ const SignIn = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submit = async () => {
-    if (form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill in all fields");
-    }
-
-    setSubmitting(true);
-
-    try {
-      await signIn(form.email, form.password);
-      const result = await getCurrentUser();
-      setUser(result);
-      setIsLogged(true);
-
-      Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const submit = async () => { };
   return (
     <SafeAreaView style={{ height: "100%", backgroundColor: "#161622" }}>
       <ScrollView contentContainerStyle={{ height: "100%" }}>
