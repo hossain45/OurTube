@@ -41,7 +41,7 @@ const SignUp = () => {
             className="w-[130px] h-[84px]"
           />
           <Text className="text-2xl text-white mt-5 font-psemibold ">
-            Sign Up to Quran TV
+            Sign Up to OurTube
           </Text>
           <FormField
             title="Username"

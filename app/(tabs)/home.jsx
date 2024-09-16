@@ -6,18 +6,19 @@ import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import { RefreshControl } from "react-native-gesture-handler";
-import { getAllPosts } from "../../lib/appwrite";
+import { getAllPosts, getLatesPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppWrite";
 import VideoCard from "../../components/VideoCard";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Home = () => {
-  const { data: posts } = useAppwrite(getAllPosts);
+  const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatesPosts);
   const [refresh, setRefresh] = useState(false);
 
   const onRefresh = async () => {
     setRefresh(true);
-    // recall vdo -> if any new vdo apprears
+    await refetch();
     setRefresh(false);
   };
   return (
@@ -54,7 +55,7 @@ const Home = () => {
                   Latest Videos
                 </Text>
 
-                {/* <Trending posts={latestPosts ?? []} /> */}
+                <Trending posts={latestPosts ?? []} />
               </View>
             </View>
           )}

@@ -1,13 +1,25 @@
 import { useState } from "react";
-import { ResizeMode, Video } from "expo-av";
+// import { ResizeMode, Video } from "expo-av";
+import YoutubePlayer from "react-native-youtube-iframe";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
 
 const VideoCard = ({ video }) => {
-  console.log(video.thumbnail, video.title, video.video);
-  console.log(video.creator.avatar);
-  console.log(video.creator.username);
+  // console.log(video.thumbnail, video.title, video.video);
+  // console.log(video.creator.avatar);
+  // console.log(video.creator.username);
+  // console.log(video.thumbnail);
+
+  const getVideoIdFromUrl = (url) => {
+    const regex =
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/i;
+    const matches = url.match(regex);
+    return matches ? matches[1] : null;
+  };
+
+  const videoUrl = "https://www.youtube.com/watch?v=-sB12gk9ESA";
+  const videoId = getVideoIdFromUrl(videoUrl);
 
   const [play, setPlay] = useState(false);
 
@@ -45,14 +57,27 @@ const VideoCard = ({ video }) => {
       </View>
 
       {play ? (
-        <Video
-          source={{ uri: video.video }}
-          className="w-full h-60 rounded-xl mt-3"
-          resizeMode={ResizeMode.CONTAIN}
-          useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
+        // <Video
+        //   // source={{ uri: video.video }}
+        //   source={{
+        //     uri: "https://player.vimeo.com/video/949582778?h=d60220d68d",
+        //   }}
+        //   className="w-full h-60 rounded-xl mt-3"
+        //   resizeMode={ResizeMode.CONTAIN}
+        //   useNativeControls
+        //   shouldPlay
+        //   onPlaybackStatusUpdate={(status) => {
+        //     if (status.didJustFinish) {
+        //       setPlay(false);
+        //     }
+        //   }}
+        // />
+        <YoutubePlayer
+          height={240}
+          play={true}
+          videoId={videoId} // YouTube video ID
+          onChangeState={(event) => {
+            if (event === "ended") {
               setPlay(false);
             }
           }}
@@ -65,6 +90,7 @@ const VideoCard = ({ video }) => {
         >
           <Image
             source={{ uri: video.thumbnail }}
+            style={{ width: "100%", height: "100%" }} // fallback in case className isn't applied correctly
             className="w-full h-full rounded-xl mt-3"
             resizeMode="cover"
           />
